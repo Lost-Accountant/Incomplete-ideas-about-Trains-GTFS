@@ -24,10 +24,10 @@ kable(head(stops))
 # visualize the stops
 stop_maps = leaflet() %>%
   # Add CartoDB background map
-  addProviderTiles("CartoDB.DarkMatter") %>%  
+  addProviderTiles("OpenStreetMap.Mapnik") %>%  
   # Add a marker for each stop
   addCircleMarkers(lng= ~ stop_lon, lat= ~stop_lat, 
                    data = stops, stroke = FALSE, 
-                   fillOpacity = 0.5, radius = 5) 
+                   fillOpacity = 5, radius = 3) 
 stop_maps  # Show the map
 ```
