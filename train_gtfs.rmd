@@ -1,24 +1,17 @@
 ```{r load library, message=FALSE}
-library(bpa)
 library(tidyverse)
 library(kableExtra)
 library(knitr)
 library(leaflet)
+library(tidytransit)
 ```
+```{r use tidytrasit}
 
-```{r load gtfs}
-agency = read_csv('agency.txt', trim_ws = TRUE)
-
-stops = read.csv('stops.txt', encoding="UTF-8")
-
-stoptime = read.csv('stop_times.txt', encoding="UTF-8")
-
-trips = read.csv("trips.txt", encoding="UTF-8")
-
-routes = read.csv("routes.txt", encoding="UTF-8")
-kable(head(stops))
+tokyo_gtfs <- read_gtfs('tokyo_trains.zip')
+attach(tokyo_gtfs)
+summary(tokyo_gtfs)
+kable(head(tokyo_gtfs$stops))
 ```
-
 
 ```{r visualization on stops}
 # visualize the stops
@@ -27,7 +20,45 @@ stop_maps = leaflet() %>%
   addProviderTiles("OpenStreetMap.Mapnik") %>%  
   # Add a marker for each stop
   addCircleMarkers(lng= ~ stop_lon, lat= ~stop_lat, 
-                   data = stops, stroke = FALSE, 
+                   data = tokyo_gtfs$stops, stroke = FALSE, 
                    fillOpacity = 5, radius = 3) 
 stop_maps  # Show the map
+```
+
+```{r departure timetable}
+# extract stop ids from the same station.
+# different agency has different stop ids for the same station
+stop_ids <- tokyo_gtfs$stops %>%
+  filter(stop_name == '目黒') %>%
+  select(stop_id)
+
+# extract trip info and time from stop_time based on stop_id
+departure <- stop_ids %>%
+  inner_join(tokyo_gtfs$stop_times %>%
+               select(trip_id, arrival_time,
+                      departure_time, stop_id),
+             by = "stop_id")
+
+# add trip id
+departure <- departure %>%
+  left_join(tokyo_gtfs$trips %>%
+              select(trip_id, route_id,
+                     service_id, trip_headsign, direction_name),
+            by = "trip_id")
+
+# add route info from routes
+departure <- departure %>%
+  left_join(tokyo_gtfs$routes %>%
+              select(route_id,
+                     route_long_name),
+            by = "route_id")
+
+# right now service id has weekday and weekend mixed.
+departure %>%
+  select(arrival_time,
+         departure_time,
+         trip_headsign,
+         direction_name, route_long_name) %>%
+  head() %>%
+  knitr::kable()
 ```
