@@ -55,10 +55,32 @@ departure <- departure %>%
 
 # right now service id has weekday and weekend mixed.
 departure %>%
-  select(arrival_time,
-         departure_time,
+  select(route_long_name,
          trip_headsign,
-         direction_name, route_long_name) %>%
-  head() %>%
+         arrival_time) %>%
+  arrange(arrival_time) %>%
   knitr::kable()
+
+weekday <- departure %>%
+  filter(grepl("Weekday", service_id, fixed = TRUE))
+
+weekday %>%
+  select(route_long_name,
+         trip_headsign,
+         arrival_time) %>%
+  arrange(arrival_time) %>%
+  knitr::kable()
+
+weekend <- departure %>%
+  filter(!grepl("Weekday", service_id, fixed = TRUE))
+
+weekend %>%
+  select(route_long_name,
+         trip_headsign,
+         arrival_time) %>%
+  arrange(arrival_time) %>%
+  knitr::kable()
+
+# map local exp logo, and number of cars
+# output to csv?
 ```
