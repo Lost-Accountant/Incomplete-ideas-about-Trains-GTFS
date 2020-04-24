@@ -1,4 +1,5 @@
 from datetime import datetime
+import graphics
 
 class ScheduleEntry:
     """
@@ -106,13 +107,25 @@ class ScheduleEntry:
         return (self.arrival_time > other.arrival_time)
 
 
-class ScheduleTable:
+class Timetable:
     """
+    === Timetable ===
+    Context: a collection of ScheduleEntry for displaying the arrival of trains on the display.
+
+    A Timetable must be able to display all information of ScheduleEntry of an arrival train, and be able to jump to the closest train arrival when initiated. Currently the maximum number of trains is 5 at a time. The Timetable should also be able to detect the end of the scheduled service and display relevant message until the next train is near. Based on the day of the week, different ScheduleEntry is needed.
+
     First in First out system. (Queue)
+
+    === Attributes ===
+    @type ScheduleEntry: ScheduleEntry
+    @param ScheduleEntry: a ScheduleEntry which contains all relevant information of a train arrival.
+    @type date: int
+    @param date: an int that keeps track of the date of the week and requests the corresponding ScheduleEntry from data.
     """
     pass
     # reached end of the day?
     # check weekend or weekday
+    # check the end of day and display until the next one
 
 if __name__ == "__main__":
     import doctest
