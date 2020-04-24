@@ -1,5 +1,7 @@
 from datetime import datetime
 import graphics
+import json
+
 
 class ScheduleEntry:
     """
@@ -28,9 +30,17 @@ class ScheduleEntry:
         self.route = route
         self.direction = direction
         self.arrival_time = datetime.strptime(arrival_time, '%H:%M:%S')
-        # search up platform number
-        # search up train type
-        # search up car numbers
+
+        # load train information
+        file = open('train_info.json', encoding="utf8")
+        train_info = json.load(file)
+        if self.route in train_info:
+            self.numberofcars = train_info[route]["numebr of cars"]
+            self.servicetype = train_info[route]["service type"]
+            self._operator = train_info[route]["operator"]
+            self.code = train_info[route]["code"]
+
+        # search up platform number for meguro station
 
 
     def __str__(self):
