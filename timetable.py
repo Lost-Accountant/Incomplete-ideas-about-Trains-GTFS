@@ -18,7 +18,7 @@ class ScheduleEntry:
     @type direction: str
     @param direction: a string that identifies the direction of the route mentioned above
     @type arrival_time: str
-    @param arrival_time: a string that identifies the arrival time of the upcoming train.
+    @param arrival_time: a string object that identifies the arrival time of the upcoming train.
     """
     def __init__(self, route = '', direction = '', arrival_time =''):
         """
@@ -50,13 +50,61 @@ class ScheduleEntry:
                                    self.direction)
 
     def __eq__(self, other):
-        pass
+        """
+        Determine if a ScheduleEntry self is equivalent to ScheduleEntry other
+
+        @type self: ScheduleEntry
+        @param other: another ScheduleEntry
+        @type other: ScheduleEntry
+        @return: whether the route, direction, and time are the same as of the otehr ScheduleEntry
+        @rtype: bool
+
+        >>> a = ScheduleEntry('山手線','外回り・品川', '00:04:00')
+        >>> b = ScheduleEntry('山手線','外回り・品川', '00:04:00')
+        >>> a == b
+        True
+        >>> c = ScheduleEntry('山線','外回り・品川', '00:04:02')
+        >>> a == c
+        False
+        """
+        return (type(self) == type(other) and
+                (self.route, self.direction, self.arrival_time) ==
+                (other.route, other.direction, other.arrival_time))
+
     def __lt__(self, other):
-        pass
-    def __ne__(self, other):
-        pass
+        """
+        Determine whether one ScheduleEntry train arrives earlier than other ScheduleEntry
+
+        @type self: ScheduleEntry
+        @param other: another ScheduleEntry
+        @type other: ScheduleEntry
+        @return: whether the time is earlier than other ScheduleEntry
+        @rtype: bool
+        >>> a = ScheduleEntry('山手線','外回り・品川', '00:04:00')
+        >>> b = ScheduleEntry('山手線','外川', '00:07:36')
+        >>> a < b
+        True
+        >>> a > b
+        False
+        """
+        return (self.arrival_time < other.arrival_time)
+
     def __gt__(self, other):
-        pass
+        """
+        Determine whether one ScheduleEntry train arrives later than other ScheduleEntry
+
+        @type self: ScheduleEntry
+        @param other: another ScheduleEntry
+        @type other: ScheduleEntry
+        @return: whether the time is later than other ScheduleEntry
+        @rtype: bool
+        >>> a = ScheduleEntry('山手線','外回り・品川', '00:04:00')
+        >>> b = ScheduleEntry('山手線','外川', '00:07:36')
+        >>> a > b
+        False
+        """
+        return (self.arrival_time > other.arrival_time)
+
 
 class ScheduleTable:
     """
