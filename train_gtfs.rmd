@@ -64,23 +64,28 @@ departure %>%
 weekday <- departure %>%
   filter(grepl("Weekday", service_id, fixed = TRUE))
 
-weekday %>%
+weekday_schedule <- weekday %>%
   select(route_long_name,
          trip_headsign,
          arrival_time) %>%
-  arrange(arrival_time) %>%
-  knitr::kable()
+  arrange(arrival_time)
+
+knitr::kable(weekday_schedule)
+
+# output for weekday schedule
+data.table::fwrite(weekday_schedule, "weekday schedule.csv")
 
 weekend <- departure %>%
   filter(!grepl("Weekday", service_id, fixed = TRUE))
 
-weekend %>%
+weekend_schedule <- weekend %>%
   select(route_long_name,
          trip_headsign,
          arrival_time) %>%
-  arrange(arrival_time) %>%
-  knitr::kable()
+  arrange(arrival_time)
 
-# map local exp logo, and number of cars
-# output to csv?
+knitr::kable(weekend_schedule)
+
+# output for weekend schedule
+data.table::fwrite(weekend_schedule, "weekend schedule.csv")
 ```
