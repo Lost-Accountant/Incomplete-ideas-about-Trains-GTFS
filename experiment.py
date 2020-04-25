@@ -6,6 +6,8 @@ path = "E:\\Textbook\\4th Year\\CSC148\\tokyo trains\\"
 weekday = 'weekday schedule.csv'
 
 df = pandas.read_csv(path + weekday, encoding = 'utf8')
+for line in df:
+    print(line)
 print(df)
 print(type(df['arrival_time'][1]))
 
@@ -46,7 +48,7 @@ from graphics import *
 #out = Image(Point(200,100), "out of service.png")
 message = Text(Point(200, 200), "外回り・品川")
 def main():
-    win = GraphWin("My Circle", 800, 480)
+    win = GraphWin("My Circle", 1540, 900)
     win.setBackground("black")
     #c = Circle(Point(50,50), 10)
     #c.draw(win)

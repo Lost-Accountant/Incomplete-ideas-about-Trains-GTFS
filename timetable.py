@@ -1,6 +1,7 @@
 from datetime import datetime
-import graphics
+from graphics import *
 import json
+import pandas
 
 
 class ScheduleEntry:
@@ -124,6 +125,7 @@ class ScheduleEntry:
         """
         return (self.arrival_time > other.arrival_time)
 
+path = "E:\\Textbook\\4th Year\\CSC148\\tokyo trains\\"
 
 class Timetable:
     """
@@ -137,32 +139,52 @@ class Timetable:
     === Attributes ===
     @type ScheduleEntry: ScheduleEntry
     @param ScheduleEntry: a ScheduleEntry which contains all relevant information of a train arrival.
-    @type date: int
-    @param date: an int that keeps track of the date of the week and requests the corresponding ScheduleEntry from data.
+    @type _table: GraphWin object
+    @param _table: a graphics window object as the background of display
+    @type arrival: list
+    @param arrival: a list to keep all the ScheduleEntry
     """
     def __init__(self):
         """
-        Initialize a blank black timetable display.
+        Initialize a blank black timetable display and an empty list.
         """
-        pass
-
-    def checkdate(self):
-        """
-        Check which version of schedule to use based on day of the week.
-        @return:
-        """
-        pass
+        self._table = GraphWin("Train Arrival Schedule", 1540, 900)
+        self._table.setBackground("black")
+        self.arrival = []
 
 
+    #def checkversion(self):
+        #"""
+        #Check which version of schedule to use based on day of the week.
+        #@return:
+        #"""
+        #pass
 
-    def add_arrival(self, ScheduleEntry):
+    def add_arrival(self, csv_file_name):
         """
-        Add all at once
-        @param ScheduleEntry:
-        @return:
+        To add all arrivals from a given csv file at once.
+
+        @type Schedule: str
+        @param Schedule: a str that points to the csv file needed
+        @rtype: None
+
+        >>> path = "E:/Textbook/4th Year/CSC148/tokyo trains/"
+        >>> weekday ='weekday schedule.csv'
+        >>> train = Timetable()
+        >>> train.add_arrival(path + weekday)
         """
-        pass
+
+        whole_schedule = pandas.read_csv(csv_file_name,
+                                         encoding='utf8')
+        for id in whole_schedule.index:
+            self.arrival.append(ScheduleEntry(
+                route=whole_schedule['route_long_name'][id],
+                direction=whole_schedule['trip_headsign'][id],
+                arrival_time=whole_schedule['arrival_time'][id]
+            ))
         # will be triggered by first time execution and later every new day at 5am
+
+        # 24:01:00 Japan stupid way of counting time. fix it.
 
     def remove_arrival(self):
         """
