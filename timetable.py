@@ -39,8 +39,16 @@ class ScheduleEntry:
             self.servicetype = train_info[route]["service type"]
             self._operator = train_info[route]["operator"]
             self.code = train_info[route]["code"]
+            self.platform = train_info[route]["platform"]
+        else:
+            self.numberofcars = '8'
+            self.servicetype = ''
+            self._operator = ''
+            self.code = ''
+            self.platform = ''
 
-        # search up platform number for meguro station
+
+        # find a way to solve direction and platform number lookup
 
 
     def __str__(self):
@@ -132,11 +140,63 @@ class Timetable:
     @type date: int
     @param date: an int that keeps track of the date of the week and requests the corresponding ScheduleEntry from data.
     """
-    pass
+    def __init__(self):
+        """
+        Initialize a blank black timetable display.
+        """
+        pass
+
+    def checkdate(self):
+        """
+        Check which version of schedule to use based on day of the week.
+        @return:
+        """
+        pass
+
+
+
+    def add_arrival(self, ScheduleEntry):
+        """
+        Add all at once
+        @param ScheduleEntry:
+        @return:
+        """
+        pass
+        # will be triggered by first time execution and later every new day at 5am
+
+    def remove_arrival(self):
+        """
+        Remove one by one based on time
+        @return:
+        """
+        pass
+
+    def JumpToNow(self):
+        """
+        Jump to closest arrival and delete all before
+        @return:
+        """
+        pass
+
+    def display(self):
+        """
+        Display the name of columns and the first 5 upcoming arrival
+        @return:
+        """
+        pass
+
+    def service_unavailable(self):
+        """
+        Check whether end of service (no arrival left) and display end of service until the next train is within 15 mins
+        @return:
+        """
+        pass
+
     # reached end of the day?
-    # check weekend or weekday
     # check the end of day and display until the next one
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
+
+    # actual script of running the timetable
