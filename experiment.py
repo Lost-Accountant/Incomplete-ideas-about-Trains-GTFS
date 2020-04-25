@@ -47,10 +47,12 @@ from graphics import *
 message = Text(Point(200, 200), "外回り・品川")
 def main():
     win = GraphWin("My Circle", 800, 480)
+    win.setBackground("black")
     #c = Circle(Point(50,50), 10)
     #c.draw(win)
     #out.draw(win)
     message.setSize(36)
+    message.setTextColor("white")
     message.draw(win)
     win.getMouse() # Pause to view result, otherwise the window will disappear
     win.close()
