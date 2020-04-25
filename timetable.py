@@ -28,9 +28,13 @@ class ScheduleEntry:
         """
         Create a schedule entry
         """
+        # maybe should have done a getter and setter
         self.route = route
         self.direction = direction
-        self.arrival_time = datetime.strptime(arrival_time, '%H:%M:%S')
+        if arrival_time[:2] == '24':
+            self.arrival_time = datetime.strptime('00' + arrival_time[2:], '%H:%M:%S')
+        else:
+            self.arrival_time = datetime.strptime(arrival_time, '%H:%M:%S')
 
         # load train information
         file = open('train_info.json', encoding="utf8")
@@ -143,6 +147,8 @@ class Timetable:
     @param _table: a graphics window object as the background of display
     @type arrival: list
     @param arrival: a list to keep all the ScheduleEntry
+    @type index: int
+    @param index: an integer to keep track of current time/position
     """
     def __init__(self):
         """
@@ -151,7 +157,9 @@ class Timetable:
         self._table = GraphWin("Train Arrival Schedule", 1540, 900)
         self._table.setBackground("black")
         self.arrival = []
-
+        self._table.getMouse()
+        self._index = 0
+        #self._table.close()
 
     #def checkversion(self):
         #"""
@@ -183,8 +191,6 @@ class Timetable:
                 arrival_time=whole_schedule['arrival_time'][id]
             ))
         # will be triggered by first time execution and later every new day at 5am
-
-        # 24:01:00 Japan stupid way of counting time. fix it.
 
     def remove_arrival(self):
         """
