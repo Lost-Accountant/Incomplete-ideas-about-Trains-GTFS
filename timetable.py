@@ -157,7 +157,7 @@ class Timetable:
         self._table = GraphWin("Train Arrival Schedule", 1540, 900)
         self._table.setBackground("black")
         self.arrival = []
-        self._table.getMouse()
+        #self._table.getMouse()
         #self._table.close()
 
     #def checkversion(self):
@@ -226,9 +226,36 @@ class Timetable:
     def display(self):
         """
         Display the name of columns and the first 5 upcoming arrival
-        @return:
+        @rtype: None
         """
-        pass
+        textsize = 36
+        textcolor = 'white'
+        # width around 1500, leave 100 each side, increment 217
+        left_most = 100
+        # 6 rows
+        # first row:
+        # 方面　のりば　種別（しゅべつ）　両数（しゃりょすう）　行先（いきさき）発車時分（はっしゃ　じぶん）
+        # Japanese labels
+        colnames = ['方面', 'のりば', '種別', '行先', '発車時分', '両数']
+        # English labels
+        colanmes_eng = ['Direction', 'Track','Train','Destination', 'Dep Time','Cars']
+
+        for colname, colname_eng in zip(colnames, colanmes_eng):
+            each_col = Text(Point(left_most, 30), colname)
+            each_col_eng = Text(Point(left_most, 65), colname_eng)
+
+            each_col.setTextColor(textcolor)
+            each_col_eng.setTextColor(textcolor)
+
+            each_col.setSize(textsize)
+            each_col_eng.setSize(textsize-20)
+
+            each_col.draw(self._table)
+            each_col_eng.draw(self._table)
+            left_most += 260
+
+
+        self._table.getMouse()
 
     def service_unavailable(self):
         """
@@ -251,4 +278,5 @@ if __name__ == "__main__":
     train.add_arrival(path + weekday)
     #print(train)
     train.JumpToNow()
+    train.display()
     print(train)
