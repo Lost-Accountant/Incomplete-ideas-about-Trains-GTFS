@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date, time
 from graphics import *
 import json
 import pandas
@@ -32,9 +32,9 @@ class ScheduleEntry:
         self.route = route
         self.direction = direction
         if arrival_time[:2] == '24':
-            self.arrival_time = datetime.strptime('00' + arrival_time[2:], '%H:%M:%S')
+            self.arrival_time = datetime.strptime('00' + arrival_time[2:], '%H:%M:%S').time()
         else:
-            self.arrival_time = datetime.strptime(arrival_time, '%H:%M:%S')
+            self.arrival_time = datetime.strptime(arrival_time, '%H:%M:%S').time()
 
         # load train information
         file = open('train_info.json', encoding="utf8")
@@ -158,7 +158,6 @@ class Timetable:
         self._table.setBackground("black")
         self.arrival = []
         self._table.getMouse()
-        self._index = 0
         #self._table.close()
 
     #def checkversion(self):
@@ -167,6 +166,18 @@ class Timetable:
         #@return:
         #"""
         #pass
+
+    def __str__(self):
+        """
+        Return a user-friendly string of the timetable.
+
+        Extends from ScheduleEntry.__str__
+        @rtype: str
+        """
+        result = ''
+        for ScheduleEntry in self.arrival:
+            result += ScheduleEntry.__str__() + '\n'
+        return result
 
     def add_arrival(self, csv_file_name):
         """
@@ -194,17 +205,23 @@ class Timetable:
 
     def remove_arrival(self):
         """
-        Remove one by one based on time
-        @return:
+        Remove the earliest arrival from the arrival list
+
+        @rtype: None
         """
-        pass
+        del self.arrival[0]
 
     def JumpToNow(self):
         """
-        Jump to closest arrival and delete all before
-        @return:
+        Jump to closest arrival and delete all before, by changing the index.
+        @rtype: None
         """
-        pass
+        now = datetime.now().time()
+        # create a new list since iterating and deleting item in a list does not work well at the same time.
+        self.arrival = [ScheduleEntry
+                        for ScheduleEntry in self.arrival
+                        if not now >
+                               ScheduleEntry.arrival_time]
 
     def display(self):
         """
@@ -224,7 +241,14 @@ class Timetable:
     # check the end of day and display until the next one
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
+    #import doctest
+    #doctest.testmod()
 
     # actual script of running the timetable
+    path = "E:/Textbook/4th Year/CSC148/tokyo trains/"
+    weekday ='weekday schedule.csv'
+    train = Timetable()
+    train.add_arrival(path + weekday)
+    #print(train)
+    train.JumpToNow()
+    print(train)
