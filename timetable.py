@@ -231,7 +231,8 @@ class Timetable:
         textsize = 36
         textcolor = 'white'
         # width around 1500, leave 100 each side, increment 217
-        left_most = 100
+        x = 100
+        y = 30
         # 6 rows
         # first row:
         # 方面　のりば　種別（しゅべつ）　両数（しゃりょすう）　行先（いきさき）発車時分（はっしゃ　じぶん）
@@ -241,8 +242,8 @@ class Timetable:
         colanmes_eng = ['Direction', 'Track','Train','Destination', 'Dep Time','Cars']
 
         for colname, colname_eng in zip(colnames, colanmes_eng):
-            each_col = Text(Point(left_most, 30), colname)
-            each_col_eng = Text(Point(left_most, 65), colname_eng)
+            each_col = Text(Point(x, y), colname)
+            each_col_eng = Text(Point(x, y + 35), colname_eng)
 
             each_col.setTextColor(textcolor)
             each_col_eng.setTextColor(textcolor)
@@ -252,7 +253,28 @@ class Timetable:
 
             each_col.draw(self._table)
             each_col_eng.draw(self._table)
-            left_most += 260
+            x += 260
+        # reset x coordinate
+        x = 100
+
+        # rest of the rows
+        for each_arrival in self.arrival:
+            y += 90
+
+            row = [each_arrival.route,
+                   each_arrival.platform,
+                   each_arrival.servicetype,
+                   each_arrival.direction,
+                   each_arrival.arrival_time.strftime("%H:%M"),
+                   each_arrival.numberofcars]
+            for element in row:
+                each_element = Text(Point(x, y), element)
+                each_element.setTextColor(textcolor)
+                each_element.setSize(textsize)
+                each_element.draw(self._table)
+                x += 260
+            # reset x
+            x = 100
 
 
         self._table.getMouse()
