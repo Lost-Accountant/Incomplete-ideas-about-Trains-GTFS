@@ -1,20 +1,23 @@
 {
   "山手線": {
-    "numebr of cars": 11,
+    "numebr of cars": "11",
     "service type": "普通",
     "code": "JY",
-    "operater": "JR東日本"
+    "operator": "JR東日本",
+    "platform": "1 & 2"
   },
   "南北線": {
-    "numebr of cars": 6,
+    "numebr of cars": "6",
     "service type": "普通",
     "code": "N",
-    "operater": "東京メトロ"
+    "operator": "東京メトロ",
+    "platform": "2"
   },
   "三田線": {
-    "numebr of cars": 6,
+    "numebr of cars": "6",
     "service type": "普通",
     "code": "I",
-    "operater": "東京メトロ"
+    "operator": "東京メトロ",
+    "platform": "2"
   }
 }
