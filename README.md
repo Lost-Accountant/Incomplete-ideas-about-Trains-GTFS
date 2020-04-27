@@ -22,6 +22,13 @@ stop_ids <- tokyo_gtfs$stops %>%
 - Result would be 2 csv files, "weekday_schedule.csv" and "weekend_schedule.csv"
 - R is used here since I found a convenient package for this job, tidytransit.
 
+### Step 1.5
+Edit information in "train_info.json" for:
+- number of cars: the number of carriages in one train for a given train line.
+- service type: local, express, limited express, rapid, airport express, or shinkansen type.
+- code: the english code for the train line
+- operator: the owner 
+
 ### Step 2
 Run "timetable.py"
 - Essential library in the same repository: graphyics.py
