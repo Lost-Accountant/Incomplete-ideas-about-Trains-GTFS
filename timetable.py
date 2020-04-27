@@ -154,8 +154,8 @@ class Timetable:
         """
         Initialize a blank black timetable display and an empty list.
         """
-        self._table = GraphWin("Train Arrival Schedule", 1540, 900)
-        self._table.setBackground("black")
+        self.table = GraphWin("Train Arrival Schedule", 1540, 900)
+        self.table.setBackground("black")
         self.arrival = []
         #self._table.getMouse()
         #self._table.close()
@@ -251,8 +251,8 @@ class Timetable:
             each_col.setSize(textsize)
             each_col_eng.setSize(textsize-20)
 
-            each_col.draw(self._table)
-            each_col_eng.draw(self._table)
+            each_col.draw(self.table)
+            each_col_eng.draw(self.table)
             x += 260
         # reset x coordinate
         x = 100
@@ -267,17 +267,21 @@ class Timetable:
                    each_arrival.direction,
                    each_arrival.arrival_time.strftime("%H:%M"),
                    each_arrival.numberofcars]
-            for element in row:
-                each_element = Text(Point(x, y), element)
-                each_element.setTextColor(textcolor)
+            for id in range(len(row)):
+                each_element = Text(Point(x, y), row[id])
+                if id == 1:
+                    each_element.setTextColor("yellow2")
+                elif id == 2:
+                    each_element.setTextColor("white")
+                else:
+                    each_element.setTextColor("green2")
                 each_element.setSize(textsize)
-                each_element.draw(self._table)
+                each_element.draw(self.table)
                 x += 260
             # reset x
             x = 100
 
-
-        self._table.getMouse()
+        #self._table.getMouse()
 
     def service_unavailable(self):
         """
@@ -285,6 +289,13 @@ class Timetable:
         @return:
         """
         pass
+
+    def clear_table(self):
+        """
+        Clean the table for refresh
+        @return:
+        """
+        self.table.delete("all")
 
     # reached end of the day?
     # check the end of day and display until the next one
@@ -298,7 +309,10 @@ if __name__ == "__main__":
     weekday ='weekday schedule.csv'
     train = Timetable()
     train.add_arrival(path + weekday)
-    #print(train)
-    train.JumpToNow()
-    train.display()
-    print(train)
+
+    while True:
+        train.JumpToNow()
+        train.display()
+        time.sleep(60)
+        train.clear_table()
+
