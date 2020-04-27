@@ -1,6 +1,7 @@
 # Train Arrival Info Board
 > Based on the GTFS file provided and a pre-specified station name, emulating a display with trains' arrival information commonly seen in Japan
 
+
 **Example Result**
 [!["Real time" Arrival at Meguro Station](https://i.imgur.com/vrJh4Ok.png)]()
 
@@ -27,7 +28,10 @@ Edit information in "train_info.json" for:
 - number of cars: the number of carriages in one train for a given train line.
 - service type: local, express, limited express, rapid, airport express, or shinkansen type.
 - code: the english code for the train line
-- operator: the owner 
+- operator: the owner of the train line, currently not essential at all.
+- platform: the platform number for the train line. Looking for suggestion on stations with multiple levels of platforms.
+
+This step is just for the complete experience, otherwise only Direction, Destination, and Dep Time will be displayed.
 
 ### Step 2
 Run "timetable.py"
