@@ -18,7 +18,7 @@ Open up "train_gtfs.rmd":
 - If want to change station, change at line 32:
 ```shell
 stop_ids <- tokyo_gtfs$stops %>%
-  filter(stop_name == '<YOUR_PREFERRED_STATION>') %>%
+  filter(stop_name == '<station_name_in_JAPANESE (short name)>') %>%
   select(stop_id)
 ```
 - Result would be 2 csv files, "weekday_schedule.csv" and "weekend_schedule.csv"
