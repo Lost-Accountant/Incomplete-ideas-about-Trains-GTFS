@@ -307,8 +307,10 @@ if __name__ == "__main__":
     # actual script of running the timetable
     path = "E:/Textbook/4th Year/CSC148/tokyo trains/"
     weekday ='weekday schedule.csv'
+    weekend = 'weekend schedule.csv'
     train = Timetable()
     train.add_arrival(path + weekday)
+    # implement selection based on day of the week
 
     while True:
         train.JumpToNow()
