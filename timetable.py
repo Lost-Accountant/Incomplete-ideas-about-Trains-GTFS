@@ -285,15 +285,16 @@ class Timetable:
 
     def service_unavailable(self):
         """
-        Check whether end of service (no arrival left) and display end of service until the next train is within 15 mins
-        @return:
+        Check whether end of service (no arrival left) and if yes terminate the window
+        @rtype: None
         """
-        pass
+        if len(self.arrival) == 0:
+            self.table.close()
 
     def clear_table(self):
         """
         Clean the table for refresh
-        @return:
+        @rtype: None
         """
         self.table.delete("all")
 
@@ -321,4 +322,5 @@ if __name__ == "__main__":
         train.display()
         time.sleep(60)
         train.clear_table()
+        train.service_unavailable()
 
