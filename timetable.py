@@ -309,8 +309,12 @@ if __name__ == "__main__":
     weekday ='weekday schedule.csv'
     weekend = 'weekend schedule.csv'
     train = Timetable()
-    train.add_arrival(path + weekday)
-    # implement selection based on day of the week
+
+    # determine which version to use
+    if datetime.now().isoweekday() < 6:
+        train.add_arrival(path + weekday)
+    else:
+        train.add_arrival(path + weekend)
 
     while True:
         train.JumpToNow()
