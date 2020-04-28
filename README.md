@@ -35,10 +35,10 @@ Edit information in "train_info.json" for:
 This step is just for the complete experience, otherwise only Direction, Destination, and Dep Time will be displayed.
 
 ### Step 2
-Run "timetable.py"
+Run "main.py"
 - Essential library in the same repository: graphyics.py
 - Other required library: pandas, json, and datetime
-- Current output refreshes every minute and is designed for a 1080p screen. Resolution can be adjusted in the class Timetable
+- Current output refreshes every minute and is designed for a 1080p screen. Resolution can be adjusted in the class Timetable in timetable.py
 ```shell
  def __init__(self):
         """
